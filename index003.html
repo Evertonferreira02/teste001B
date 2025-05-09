@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma Surpresa Especial!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fde9d9; /* Um tom de bege suave */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .question {
+            font-size: 2em;
+            color: #d84315; /* Um tom de laranja mais escuro */
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        .reveal-text {
+            font-size: 2.5em;
+            color: #2e7d32; /* Um tom de verde alegre */
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .revealed {
+            opacity: 1;
+        }
+        .hidden-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 20px auto;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+        .revealed-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .hint {
+            color: #777;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="surpriseCard">
+        <div class="question">Clique para uma surpresa!</div>
+        <div class="reveal-text" id="revealMessage"></div>
+        <div class="hidden-image" id="revealImageContainer">
+            <img src="foto-do-bebe.jpeg" alt="Imagem de um bebê" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div class="hint">Será que algo está crescendo?</div>
+    </div>
+
+    <script>
+        const surpriseCard = document.getElementById('surpriseCard');
+        const revealMessage = document.getElementById('revealMessage');
+        const revealImageContainer = document.getElementById('revealImageContainer');
+        const messages = [
+            "Parabéns!",
+            "Prepare-se para...",
+            "Você vai ser...",
+            "VOVÓ!!!"
+        ];
+        let messageIndex = 0;
+        let revealed = false;
+
+        surpriseCard.addEventListener('click', () => {
+            if (!revealed) {
+                revealMessage.textContent = messages[messageIndex];
+                revealMessage.classList.add('revealed');
+                messageIndex++;
+
+                if (messageIndex === messages.length) {
+                    revealImageContainer.classList.add('revealed-image');
+                    // Remove a interatividade após a revelação completa
+                    surpriseCard.style.cursor = 'default';
+                    surpriseCard.removeEventListener('click', arguments.callee);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
